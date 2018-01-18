@@ -1,0 +1,197 @@
+﻿@{
+    ViewBag.Title = "FichaCadastral";
+}
+
+
+<div class="container">
+    <fieldset id="Campos_Form">
+        <legend><h2 class="cor_azul"><strong>Ficha Cadastral</strong></h2></legend>
+        @{Html.RenderPartial("_Resumo");}
+        <legend><h3 class="cor_azul"><strong></strong></h3></legend>
+        <br />
+        <div id="Linha_Botoes_Tab"  class="row">
+            <div class="col-xs-12">
+                <strong><ul class="nav nav-tabs cor_azul">
+                    <li><a href="#TabInfo"          id="info"       data-toggle="tab" pilltype="pill" class="active">Informações</a></li>
+                    <li><a href="#TabDoc"           id="doc"        data-toggle="tab" pilltype="pill">Documentos</a></li>
+                    <li><a href="#TabContratacao"   id="Contrat"    data-toggle="tab" pilltype="pill">Contratação</a></li>
+                    <li><a href="#TabEscolaridade"  id="Escolar"    data-toggle="tab" pilltype="pill">Beneficios</a></li>
+                    <li><a href="#TabHistorico"     id="hist"       data-toggle="tab" pilltype="pill">Eventos <span id="qtdItems" class="badge"> 4 </span></a></li>
+                </ul>
+                    </strong>
+            </div>
+        </div>
+        <div id="Linha_Conteudo" class="row">
+            <div id="Colunas_Conteudo" class="col-md-10">
+                <!--
+                    Classe 'tab-content' marca a Div devidamente construida como o conteudo das guias que estarao vinculadas com a 'nav' acima
+                    Classe 'tab-pane' marcada em cada Div, indica que a div representa a tab especificada pelo ID e vinculada com o link acima--
+                    -->
+                <div id="conteudoTab" class="tab-content cor_azul">
+                    @{Html.RenderPartial("_TabInfo");}
+                    @{Html.RenderPartial("_TabDoc");}
+                    @{Html.RenderPartial("_TabContratacao");}
+                    @{Html.RenderPartial("_TabEventos");}
+                    @{Html.RenderPartial("_TabEscolaridade");}
+                </div>
+            </div>
+        </div> <!--Conteudo-->
+    </fieldset>
+    <br />
+    <button class="btn btn-primary" type="submit">Salvar</button>
+</div>
+
+ <script>
+        $('#txtNome').val("Adelson Rosendo Marques da Silva");
+        $('#txtEmail').val("adelson@tecnun.com.br");
+        $('#txtUsuario').val("adelson@outlook.com.br");
+
+        document.getElementById("NomeReduzido").innerText = "Adelson Silva";
+        document.getElementById("cargo").innerText = "Analista de Sistemas";
+  </script>
+
+<script>
+    $(document).ready(function () {
+        var tb = $('#tblEventos').DataTable({
+            dom: 'Bfrtip',
+
+
+            //Plugin : Pagination
+            
+            //Extenção : Select
+            //----------------------------------------------------------------
+            //Apenas esse comando habilita a seleção
+            //select: true,
+            //Outras opções do Select
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+
+            //Customiza a mensagem de seleção
+            language: {
+                select: {
+                    rows: {
+                        _: "%d linhas foram selecionadas",
+                        0: "Clique em uma linha para selecionar",
+                        1: "Somente um registro foi selecioado"
+                    }
+                }
+            },
+
+            //Inicializa a tabela com a primeira (começando em 0) coluna classificada de ordem crescente
+            order: [[1, 'asc']],
+
+            //Configura a primeira coluna para que vire um CheckBox atraves da class 'select-checkbox'
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+
+
+            //Extenção : Button
+            //----------------------------------------------------------------
+            buttons: [
+                ////Adiciona um botão personalizado e executa uma ação personalizada em uma função
+                //{
+                //    text: 'Consultar',
+                //    action: function (e, dt, node, config) {
+                //        alert('O botão foi clicado');
+                //    }
+                //}
+                /*
+                    Botão Gerar Excel
+                     - a option 'text' reproduz o texto do botão.
+                       Pode ser um texto simples como  text : 'Gerar Excel' ou a definição de um html que aponta para um icone ou imagem
+                        Nesse caso, estou utilizando fontes de icones font-Awesome na class
+                    - a option titleAttr gera o tooltip do botão
+                    - Algumas class que representa icones comuns :
+
+                        > fa fa-file-excel-o : Icone do Excel
+                        > fa fa-file-text-o : Icone do CSV
+                        > fa fa-file-pdf-o : Icone do PDF
+                        > fa fa-print : Icone de Imprimir
+                */
+
+                {
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                    extend: 'excelHtml5',
+                    titleAttr: 'Clique para exportar para Excel'
+                    //,className: 'btn btn-primary'
+
+                }
+
+                //Cria um botão com um texto personalizado e executa a ação padrão 'Imprimir'
+                , {
+                    text: '<i class="fa fa-file-pdf-o"></i>',
+                    extend: 'pdfHtml5',
+                    messageTop: 'PDF Gerado pelo ERP TECNUN.',
+                    titleAttr: 'Clique para gerar PDF'
+                    //,className: 'btn btn-success'
+                }
+
+                //Cria um botão com um texto personalizado e executa a ação padrão 'Imprimir'
+                ,{
+                    text: '<i class="fa fa-print"></i>',
+                    extend: 'print',
+                    titleAttr: 'Clique para Imprimir a lista'
+                }
+
+                ////Cria um botão e executa a ação 'Imprimir' a qual imprime a pagina inteira.
+                //,{
+                //    text: 'Imprimir Pagina', action: function () { print();}
+                //}
+            ]
+
+            //buttons: [
+            //    'copy', 'csv', 'excel', 'pdf', 'print'
+            //],
+
+            ,"language":
+            {
+                "url": "/Content/datatable/Portuguese-Brasil.json",
+                "decimal": "",
+                "thousands": ","
+            },
+        });
+
+        //Aplica estilo Bootstrap nos botões
+        tb.buttons().container()
+            .appendTo('#tblEventos_wrapper .col-sm-6:eq(0)');
+
+    });
+    document.getElementById("qtdItems").innerText = document.getElementById('tblEventos').rows.length - 1;
+</script>
+
+<!--
+Definições para Linguagem diretamente no Datatable
+    
+    {
+    "decimal":        "",
+    "emptyTable":     "Nenhum registro encontrado",
+    "info":           "Exibindo _START_ até _END_ de _TOTAL_ Registros",
+    "infoEmpty":      "Exidingo 0 registros",
+    "infoFiltered":   "(Filtrado do total de _MAX_ registros)",
+    "infoPostFix":    "",
+    "thousands":      ",",
+    "lengthMenu":     "Exibir _MENU_ Exibir registros",
+    "loadingRecords": "Carregando, aguarde...",
+    "processing":     "Processando, aguarde...",
+    "search":         "Pesquisar :",
+    "zeroRecords":    "Nenhum registro encontrado na busca",
+    "paginate": {
+        "first":      "Primeiro",
+        "last":       "Ultimo",
+        "next":       "Proximo",
+        "previous":   "Anterior"
+    },
+    "aria": {
+            "sortAscending":  ": Ativar a coluna para Classificação Crescente",
+            "sortDescending": ": Ativar a coluna para Classificação Decrescente"
+            }
+
+    "url": "http://localhost:54852/Content/DataTable/language/Portuguese.json"
+
+}
+-->

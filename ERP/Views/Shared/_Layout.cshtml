@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - ERP Tecnun</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    @Scripts.Render("~/JS/JQuery")
+    @Scripts.Render("~/JS/Bootstrap")
+    @Scripts.Render("~/JS/DataTable")
+
+    @Styles.Render("~/CSS/Tecnun")
+    @Styles.Render("~/CSS/Bootstrap")
+    
+    
+    @Styles.Render("~/CSS/DataTable")
+
+    @{Html.RenderPartial("_HeadLib");}
+
+
+
+
+    <script type="text/javascript">
+            try {
+                var jq = $(document);
+                // document.write("JQuery instalado");
+            } catch (e) {
+                var mensagem = "JQuery não está instalado !";
+                document.write(mensagem);
+                //Interrompe no Depurador
+                throw new Error(mensagem)
+            }
+    </script>
+
+</head>
+<body>
+    <header>
+        <!--Criando Header-->
+        <nav class="navbar navbar-inverse" id="barraMenu">
+            <div class="container">
+                <div class="navbar-header">
+                    <!--Botão Toggle para responsividade-->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Menu">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Home/Index"><img class="auto-style1 Brand" src="~/Content/images/96x96.png" /></a>
+                </div>
+                <!--Barra de Menu-->
+                @{Html.RenderPartial("_MenuBar");}
+            </div>
+        </nav>
+    </header>
+
+
+    <div id="body1">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="float-left">
+                <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
