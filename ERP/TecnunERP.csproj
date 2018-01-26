@@ -240,6 +240,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_HeadLib.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
